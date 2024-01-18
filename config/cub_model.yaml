@@ -1,0 +1,42 @@
+OUTPUT_DIR: "checkpoints/cub_model"
+LOG_FILE_NAME: "results.log"
+MODEL_FILE_NAME: "best_model.pth"
+SEED: 12345
+MODEL:
+  META_ARCHITECTURE: "model"
+  SCALE: 20.0
+  SCORE_LOCAL: 0.8
+  BACKBONE:
+    PRETRAINED: True
+  ATTENTION:
+    CHANNEL: 512
+    WEIGHT_SHARED: True
+    W2V_PATH: "Attribute/w2v"
+  LOSS:
+    LAMBDA1: 1.0
+    LAMBDA2: 0.5
+    LAMBDA3: 0.01
+
+DATASETS:
+  NAME: "CUB"
+  IMAGE_SIZE: 224  
+  WAYS: 16
+  SHOTS: 2
+
+DATALOADER:
+  MODE: 'episode'
+  N_BATCH: 300
+
+SOLVER:
+  MAX_EPOCH: 15 
+  BASE_LR:  5e-4 
+  WEIGHT_DECAY: 1e-4 
+  MOMENTUM: 0.9
+  GAMMA: 0.1
+  STEPS: 5
+  DATA_AUG: "resize_random_crop"
+
+TEST:
+  IMS_PER_BATCH: 100
+  DATA_AUG: "resize_crop"
+  GAMMA: 1.5
