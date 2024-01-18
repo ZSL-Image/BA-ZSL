@@ -11,7 +11,7 @@ This is the implementation code of the paper “MGFIN: Multi-Granularity Feature
 ## Training
 - **Dataset**: please download the dataset, (i.e., CUB, SUN and AWA2) to the dataset root path on your machine
 - **Data split**: Datasets can be download from [Xian et al. (CVPR2017)](https://datasets.d2.mpi-inf.mpg.de/xian/xlsa17.zip) and take them into dir ```../../datasets/```.
-- Download pretranined vision Transformer as the vision encoder.
+- Download pre-trained vision Transformer as the vision backbone.
 
 ### Training Script
 ```shell
