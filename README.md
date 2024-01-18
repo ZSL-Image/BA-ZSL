@@ -9,7 +9,7 @@ This is the implementation code of the paper “MGFIN: Multi-Granularity Feature
 - numpy = 1.23.5
 
 ## Training
-- **Dataset**: please download the dataset, i.e., [CUB](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html), [AWA2](https://cvml.ist.ac.at/AwA2/), [SUN](https://groups.csail.mit.edu/vision/SUN/hierarchy.html) to the dataset root path on your machine
+- **Dataset**: please download the dataset, (i.e., CUB, SUN and AWA2) to the dataset root path on your machine
 - **Data split**: Datasets can be download from [Xian et al. (CVPR2017)](https://datasets.d2.mpi-inf.mpg.de/xian/xlsa17.zip) and take them into dir ```../../datasets/```.
 - Download pretranined vision Transformer as the vision encoder.
 
@@ -21,15 +21,10 @@ python train_m.py --config-file config/awa2_model.yaml
 ```
 
 ## Testing
-You can download the pre-trained model on three different datasets: CUB, SUN, AWA2 in the CZSL/GZSL setting. 
+<!-- You can download the pre-trained model on three different datasets: CUB, SUN, AWA2 in the CZSL/GZSL setting.  -->
 ### Training Script
 ```shell
 python test.py --config-file config/cub_model.yaml
 python test.py --config-file config/sun_model.yaml
 python test.py --config-file config/awa2_model.yaml
 ```
-
-## Ackowledgement
-Our code was helped by the following work, for which we are very grateful:
-- [GEM-ZSL](https://github.com/osierboy/GEM-ZSL)
-- [PSVMA](https://github.com/ManLiuCoder/PSVMA)
