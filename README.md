@@ -1,5 +1,5 @@
 # MGFIN
-This is the implementation code of the paper “MGFIN: Multi-Granularity Feature Interaction Network for Zero-Shot Learning”.
+This is the implementation code of the paper “Multi-Granularity Feature Interaction Network for Zero-Shot Learning”.
 
 
 ## Requirements
