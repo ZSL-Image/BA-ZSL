@@ -124,20 +124,22 @@ class Block(nn.Module):
 
     def forward(self, x, parts=None):
         x = rearrange(x, "b c p -> b p c")
-        # ADWM
+        # MGSFL    Commenting out the ADWM and SGCMI codes is the ablation experiment for MGSFL.
+        # ADWM    Commenting out this code is the ablation experiment on ADWM.
         parts1 = self.attribute_distinction(parts)
         parts_out = parts1 + parts
         parts = parts_out
 
-        # Semantic-Guided Cross-Modal Interaction
+        # Semantic-Guided Cross-Modal Interaction (SGCMI)
         attn_0, attn_out = self.enc_attn(q=parts, k=x, v=x)
         attn_0 = self.maxpool1d(attn_0).flatten(1)
         parts_in= parts + attn_out
 
-        # VIEM
+        # IVFL
+        # VIEM Commenting out this code is the ablation experiment on VIEM.
         feats1 = x + self.ffn(x)
 
-        # Visual-Guided Cross-Modal Interaction
+        # Visual-Guided Cross-Modal Interaction (VGCMI)
         attn_, feats = self.dec_attn(q=feats1, k=parts_in, v=parts_in)
         feats = x + feats
 
@@ -226,27 +228,28 @@ class MGFIN(nn.Module):
         feats_0 = self.backbone(feats_0)
         feats_in = feats_0[:, 1:, :]
         feats_g = feats_0[:, 0, :]
-        feats, att_mask = self.blocks(feats_in.transpose(1,2), parts=parts)
+        feats, att_mask = self.blocks(feats_in.transpose(1,2), parts=parts)    # Commenting out this code will result in the baseline in the ablation experiment. Directly use the features extracted from ViT for classification.
         
         out = self.avgpool1d(feats.view(self.batch, self.feat_channel, -1)).view(self.batch, -1)
         out1 = torch.einsum('bc,cd->bd', out, self.V)
         score = self.compute_score(out1, seen_att, att_all)
 
-        out_g = torch.einsum('bc,cd->bd', feats_g, self.V2)
-        score_g = self.compute_score(out_g, seen_att, att_all)
+        out_g = torch.einsum('bc,cd->bd', feats_g, self.V2)    # Commenting out this code is the ablation experiment on GVF. And the corresponding other codes need to be changed.
+        score_g = self.compute_score(out_g, seen_att, att_all)    # Commenting out this code is the ablation experiment on GVF.
 
         if not self.training:
-            return score_local*score + (1.0-score_local)*score_g
+            return score_local*score + (1.0-score_local)*score_g    # Commenting out this code is the ablation experiment on GVF. Only return 'score'.
+            # return score
         
-        Lreg1 = self.Reg_loss(att_mask, att)
+        Lmse = self.Reg_loss(att_mask, att)    # Commenting out this code is the ablation experiment on L_MSE. And the corresponding other codes need to be commented out.
         Lcls = self.CLS_loss(score, label)
-        Lcls_g = self.CLS_loss(score_g, label)
+        Lcls_g = self.CLS_loss(score_g, label)    # Commenting out this code is the ablation experiment on GVF.
         scale = self.scale.item()
         loss_dict = {
-            'Reg_loss': Lreg1,
+            'Reg_loss': Lmse,    # Commenting out this code is the ablation experiment on L_MSE.
             'Cls_loss': Lcls,
             'scale': scale,
-            'Clsg_loss': Lcls_g
+            'Clsg_loss': Lcls_g    # Commenting out this code is the ablation experiment on GVF.
         }
 
         return loss_dict
