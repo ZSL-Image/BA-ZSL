@@ -39,4 +39,4 @@ SOLVER:
 TEST:
   IMS_PER_BATCH: 100
   DATA_AUG: "resize_crop"
-  GAMMA: 3.3
+  GAMMA: 2.9
