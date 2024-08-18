@@ -149,19 +149,17 @@ class Block(nn.Module):
 
 class MGFIN(nn.Module):
     def __init__(self, basenet, c, w, h,
-                 attritube_num, cls_num, ucls_num, attr_group, group_num, w2v,
+                 attritube_num, cls_num, ucls_num, w2v,
                  scale=20.0, device=None):
 
         super(MGFIN, self).__init__()
         self.attritube_num = attritube_num
-        self.group_num=group_num
         self.feat_channel = c
         self.feat_wh = w * h
         self.batch =10
         self.cls_num= cls_num
         self.ucls_num = ucls_num
         self.scls_num = cls_num - ucls_num
-        self.attr_group = attr_group
         self.w2v_att = torch.from_numpy(w2v).float().to(device)
         self.mask = torch.zeros(self.cls_num).to(device)
         self.mask[:self.scls_num] = -1
@@ -261,8 +259,6 @@ def build_model(cfg):
     attritube_num = info["input_dim"]
     cls_num = info["n"]
     ucls_num = info["m"]
-    group_num = info["g"] 
-    attr_group = utils.get_attr_group(dataset_name)
     c,w,h = 768, 14, 14
     scale = cfg.MODEL.SCALE 
     vit_model = create_model(num_classes=-1)
@@ -283,7 +279,6 @@ def build_model(cfg):
 
     return MGFIN(basenet=vit_model,
                   c=c,w=w,h=h,scale=scale,
-                  attritube_num=attritube_num,attr_group=attr_group,
-                  group_num=group_num, w2v=w2v,
+                  attritube_num=attritube_num, w2v=w2v,
                   cls_num=cls_num, ucls_num=ucls_num,
                   device=device)
