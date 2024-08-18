@@ -15,8 +15,8 @@ from models.utils.comm import get_world_size
 class ImgDatasetParam(object):
     ## update dir 'imgroot', "dataroot"
     DATASETS = {
-        "imgroot": '/data/lihui/code/GEM-ZSL/data',
-        "dataroot": '/data/lihui/code/GEM-ZSL/data/xlsa17/data',
+        "imgroot": '../dataset',
+        "dataroot": '../dataset/xlsa17/data',
         "image_embedding": 'res101',
         "class_embedding": 'att'
     }
