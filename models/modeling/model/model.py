@@ -147,12 +147,12 @@ class Block(nn.Module):
         return feats, attn_0
     
 
-class MGFIN(nn.Module):
+class BAZSL(nn.Module):
     def __init__(self, basenet, c, w, h,
                  attritube_num, cls_num, ucls_num, w2v,
                  scale=20.0, device=None):
 
-        super(MGFIN, self).__init__()
+        super(BAZSL, self).__init__()
         self.attritube_num = attritube_num
         self.feat_channel = c
         self.feat_wh = w * h
@@ -277,7 +277,7 @@ def build_model(cfg):
 
     device = torch.device(cfg.MODEL.DEVICE)
 
-    return MGFIN(basenet=vit_model,
+    return BAZSL(basenet=vit_model,
                   c=c,w=w,h=h,scale=scale,
                   attritube_num=attritube_num, w2v=w2v,
                   cls_num=cls_num, ucls_num=ucls_num,
