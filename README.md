@@ -1,5 +1,5 @@
-# MGFIN
-This is the implementation code of the paper “Multi-Granularity Feature Interaction Network for Zero-Shot Learning”.
+# BA-ZSL
+This is the implementation code of the paper “Mitigating Attribute Visual Bias via Bidirectional Attention for Zero-Shot Learning”.
 
 
 ## Requirements
